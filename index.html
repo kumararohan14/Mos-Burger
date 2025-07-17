@@ -77,6 +77,22 @@
             </div>
         </div>
     </div>
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup">
+            <span class="close" id="closePopup">&times;</span>
+            <h2>Enter Product Details</h2>
+            <input type="text" id="productName" placeholder="Product Name" />
+            <input type="text" id="description" placeholder="Description" />
+            <input type="text" id="imagePath" placeholder="Image Path" />
+            <input type="number" id="stockStatus" placeholder="Stock Status" />
+            <input type="number" id="price" placeholder="Price (LKR)" step="0.01" />
+            <input type="date" id="dateAdded" placeholder="Date Added" />
+            <input type="date" id="dateExpired" placeholder="Date Expired" />
+            <input type="number" id="supplierId" placeholder="Supplier ID" />
+            <input type="text" id="itemCode" placeholder="Item Code" />
+            <button id="saveBtn">Save Product</button>
+        </div>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>

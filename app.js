@@ -564,20 +564,20 @@ let products = [
         date_expired: "2025-07-18",
         supplier_id: 2,
         item_code: "B1046"
-    },
-    {
-        id: 47,
-        name: "Mirinda (330ml)",
-        description: "Fruity Mirinda in a 330ml bottle — vibrant and sweet with a 7% discount.",
-        image_path: "images/mirinda-330ml.jpg",
-        stock_status: 28,
-        price: 850.00,
-        discount: "7%",
-        date_added: "2025-07-13",
-        date_expired: "2025-07-18",
-        supplier_id: 2,
-        item_code: "B1047"
     }
+    // {
+    //     id: 47,
+    //     name: "Mirinda (330ml)",
+    //     description: "Fruity Mirinda in a 330ml bottle — vibrant and sweet with a 7% discount.",
+    //     image_path: "images/mirinda-330ml.jpg",
+    //     stock_status: 28,
+    //     price: 850.00,
+    //     discount: "7%",
+    //     date_added: "2025-07-13",
+    //     date_expired: "2025-07-18",
+    //     supplier_id: 2,
+    //     item_code: "B1047"
+    // }
 ];
 
 
@@ -612,3 +612,42 @@ function displayProducts(filteredProducts){
         container.innerHTML += productHtml;
     }
 }
+
+const openBtn = document.querySelector('.product-btn');
+  const popup = document.getElementById('popupOverlay');
+  const closeBtn = document.getElementById('closePopup');
+
+  openBtn.addEventListener('click', () => {
+    popup.style.display = 'flex';
+  });
+
+  closeBtn.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+
+  // Optional: Close when clicking outside the popup
+  window.addEventListener('click', (e) => {
+    if (e.target === popup) {
+      popup.style.display = 'none';
+    }
+  });
+
+  const saveBtn = document.getElementById('saveBtn');
+
+  saveBtn.addEventListener('click', () => {
+  const product = {
+    name: document.getElementById('productName').value,
+    description: document.getElementById('description').value,
+    image_path: document.getElementById('imagePath').value,
+    stock_status: parseInt(document.getElementById('stockStatus').value),
+    price: parseFloat(document.getElementById('price').value),
+    date_added: document.getElementById('dateAdded').value,
+    date_expired: document.getElementById('dateExpired').value,
+    supplier_id: parseInt(document.getElementById('supplierId').value),
+    item_code: document.getElementById('itemCode').value
+  };
+  products.push(product);
+
+  console.log(product); // or save to array, send to server, etc.
+  alert("Product saved: " + product.name);
+});
