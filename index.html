@@ -55,7 +55,86 @@
         </div>
     </div>
     <div class="checkout-and-searchlist-container">
-        <div class="add-to-cart-container1"></div>
+        <div class="add-to-cart-container1">
+            <div>
+                <table class="cart-table">
+                <thead>
+                    <tr>
+                    <th>#</th>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody id="cart-body">
+                    <tr>
+                        <td>1</td>
+                        <td>Aspirin</td>
+                        <td>
+                            <div class="qty-control">
+                            <button onclick="decreaseQty(this)">-</button>
+                            <input type="text" value="1"/>
+                            <button onclick="increaseQty(this)">+</button>
+                            </div>
+                        </td>
+                        <td>UGX 800</td>
+                        <td><button class="remove-btn" onclick="removeItem(this)">×</button></td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>Aspirin</td>
+                        <td>
+                            <div class="qty-control">
+                            <button onclick="decreaseQty(this)">-</button>
+                            <input type="text" value="1"/>
+                            <button onclick="increaseQty(this)">+</button>
+                            </div>
+                        </td>
+                        <td>UGX 800</td>
+                        <td><button class="remove-btn" onclick="removeItem(this)">×</button></td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>Aspirin</td>
+                        <td>
+                            <div class="qty-control">
+                            <button onclick="decreaseQty(this)">-</button>
+                            <input type="text" value="1"/>
+                            <button onclick="increaseQty(this)">+</button>
+                            </div>
+                        </td">
+                        <input type="hidden" class="unit-price" value="800" />
+                        <td>RS<span class="price-qty">800</span></td>
+                        <td><button class="remove-btn" onclick="removeItem(this)">×</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            
+
+            </div>
+            
+
+            <div class="cart-footer">
+                <div class="cart-summary">
+                    <div>Total Item(s): <span id="totalItems">1</span></div>
+                    <div>Discount: <input type="text" placeholder="amount" id="discountInput" /></div>
+                    <div>Price: <span id="price">UGX800</span></div>
+                    <div>Gross Price (inc 18% Tax): RS<span class="cart-total" id="grossTotal"></span></div>
+                </div>
+                <div class="cart-actions">
+                    <button class="print-btn"><i class="fas fa-print"></i></button>
+                    <button class="cancel-btn">Cancel</button>
+                    <button class="hold-btn">Hold</button>
+                    <button class="pay-btn">Pay</button>
+                </div>
+            </div>
+        </div>
+
+        
         <div class="search-main-container">
             <div class="search-container1">
                 <div class="search-bar1">

@@ -582,11 +582,12 @@ let products = [
 
 
 document.getElementById("search-box").addEventListener("input", function() {
-    console.log(Array.isArray(products));
+    
     const searchTerm = this.value.toLowerCase();
     const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchTerm)  
   );
+  console.log(filteredProducts);
 
   displayProducts(filteredProducts);
   
@@ -594,20 +595,20 @@ document.getElementById("search-box").addEventListener("input", function() {
 
 function displayProducts(filteredProducts){
     let container1 = document.getElementById("search-list-container");
-    console.log("container"+Array.isArray(container1));
-    console.log(container1);
     
     let container = document.querySelector(".search-list-container");
     container.innerHTML = ""; // clear previous results
 
     for (let product of filteredProducts) {
         const productHtml = `
+        <div class="product" onclick="addToCart(${product.id})">
             <div class="product">
                 <div><img src="${product.image_path}" alt=""></div>
                 <p class="product-name">${product.name}</p>
                 <p class="product-qty">${product.stock_status}</p>
                 <p class="product-price">Rs.${product.price}</p>
             </div>
+        </div>
         `;
         container.innerHTML += productHtml;
     }
@@ -651,3 +652,67 @@ const openBtn = document.querySelector('.product-btn');
   console.log(product); // or save to array, send to server, etc.
   alert("Product saved: " + product.name);
 });
+
+function increaseQty(btn) {
+  let input = btn.previousElementSibling;
+  let row = btn.closest('tr');
+  let priceObj= row.querySelector(".price-qty")
+  let unitPrice = parseFloat(row.querySelector(".unit-price").value);
+
+  input.value = parseInt(input.value) + 1;
+  let totalPrice= unitPrice*input.value;
+  priceObj.textContent=totalPrice;
+  
+}
+
+function decreaseQty(btn) {
+  let input = btn.nextElementSibling;
+  if (parseInt(input.value) > 1) {
+    input.value = parseInt(input.value) - 1;
+  }
+}
+
+function removeItem(btn) {
+  let row = btn.closest('tr');
+    console.log(row);
+  row.remove();
+ 
+}
+
+function addToCart(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+  const cartBody = document.getElementById("cart-body");
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${product.item_code}</td>
+    <td>${product.name}</td>
+    <td>
+        <div class="qty-control">
+        <button onclick="decreaseQty(this)">-</button>
+        <input type="text" value="1"/>
+        <button onclick="increaseQty(this)">+</button>
+        </div>
+    </td>
+    <input type="hidden" class="unit-price" value=${product.price} />
+    <td>RS<span class="price-qty">${product.price}</span></td>
+    <td><button onclick="removeItem(this)" class="remove-btn">×</button></td>
+  `;
+    
+    console.log(document.getElementById("cart-body").children);
+    
+  cartBody.appendChild(row);
+//   updateTotals();
+calculateTotal();
+
+}
+
+function calculateTotal(){
+    let total = 0;
+    const priceSpan = document.querySelectorAll('.price-qty');
+    priceSpan.forEach(element => {
+      total += parseFloat(element.textContent);   
+    });
+    document.getElementById("grossTotal").innerText=total;
+}
+

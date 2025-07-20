@@ -391,3 +391,128 @@
         padding: 25px;
       }
     }
+
+    .add-to-cart-container1 {
+  /* margin: 20px; */
+  /* padding: 20px; */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-table th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+}
+
+.qty-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qty-control button {
+  padding: 5px 10px;
+  font-size: 16px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+.qty-control input {
+  width: 40px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.remove-btn {
+  color: white;
+  background-color: red;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* cart item css */
+
+.cart-footer {
+        
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        padding: 15px 20px;
+        background-color: #f9f9f9;
+        border-top: 1px solid #ddd;
+        border-radius: 0 0 8px 8px;
+        font-size: 14px;
+    }
+    .cart-summary {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .cart-summary div {
+        display: flex;
+        align-items: center;
+    }
+    .cart-summary input {
+        padding: 4px 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 80px;
+    }
+
+    .cart-total {
+        font-weight: bold;
+        font-size: 18px;
+        color: #333;
+    }
+    .cart-actions {
+        display: flex;
+        gap: 10px;
+    }
+    .cart-actions button {
+      padding: 10px 16px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+    }
+
+.print-btn {
+  background-color: #0dcaf0;
+}
+
+.cancel-btn {
+  background-color: #dc3545;
+}
+
+.hold-btn {
+  background-color: #6c757d;
+}
+
+.pay-btn {
+  background-color: #198754;
+}
