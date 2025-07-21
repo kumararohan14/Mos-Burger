@@ -527,7 +527,7 @@ let products = [
         supplier_id: 3,
         item_code: "B1043"
     },
-     {
+    {
         id: 44,
         name: "Pepsi (330ml)",
         description: "Chilled Pepsi in a 330ml bottle — fizzy, refreshing, and flavorful.",
@@ -581,21 +581,21 @@ let products = [
 ];
 
 
-document.getElementById("search-box").addEventListener("input", function() {
-    
+document.getElementById("search-box").addEventListener("input", function () {
+
     const searchTerm = this.value.toLowerCase();
     const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(searchTerm)  
-  );
-  console.log(filteredProducts);
+        product.name.toLowerCase().includes(searchTerm)
+    );
+    console.log(filteredProducts);
 
-  displayProducts(filteredProducts);
-  
+    displayProducts(filteredProducts);
+
 });
 
-function displayProducts(filteredProducts){
+function displayProducts(filteredProducts) {
     let container1 = document.getElementById("search-list-container");
-    
+
     let container = document.querySelector(".search-list-container");
     container.innerHTML = ""; // clear previous results
 
@@ -615,77 +615,77 @@ function displayProducts(filteredProducts){
 }
 
 const openBtn = document.querySelector('.product-btn');
-  const popup = document.getElementById('popupOverlay');
-  const closeBtn = document.getElementById('closePopup');
+const popup = document.getElementById('popupOverlay');
+const closeBtn = document.getElementById('closePopup');
 
-  openBtn.addEventListener('click', () => {
+openBtn.addEventListener('click', () => {
     popup.style.display = 'flex';
-  });
+});
 
-  closeBtn.addEventListener('click', () => {
+closeBtn.addEventListener('click', () => {
     popup.style.display = 'none';
-  });
+});
 
-  // Optional: Close when clicking outside the popup
-  window.addEventListener('click', (e) => {
+// Optional: Close when clicking outside the popup
+window.addEventListener('click', (e) => {
     if (e.target === popup) {
-      popup.style.display = 'none';
+        popup.style.display = 'none';
     }
-  });
+});
 
-  const saveBtn = document.getElementById('saveBtn');
+const saveBtn = document.getElementById('saveBtn');
 
-  saveBtn.addEventListener('click', () => {
-  const product = {
-    name: document.getElementById('productName').value,
-    description: document.getElementById('description').value,
-    image_path: document.getElementById('imagePath').value,
-    stock_status: parseInt(document.getElementById('stockStatus').value),
-    price: parseFloat(document.getElementById('price').value),
-    date_added: document.getElementById('dateAdded').value,
-    date_expired: document.getElementById('dateExpired').value,
-    supplier_id: parseInt(document.getElementById('supplierId').value),
-    item_code: document.getElementById('itemCode').value
-  };
-  products.push(product);
+saveBtn.addEventListener('click', () => {
+    const product = {
+        name: document.getElementById('productName').value,
+        description: document.getElementById('description').value,
+        image_path: document.getElementById('imagePath').value,
+        stock_status: parseInt(document.getElementById('stockStatus').value),
+        price: parseFloat(document.getElementById('price').value),
+        date_added: document.getElementById('dateAdded').value,
+        date_expired: document.getElementById('dateExpired').value,
+        supplier_id: parseInt(document.getElementById('supplierId').value),
+        item_code: document.getElementById('itemCode').value
+    };
+    products.push(product);
 
-  console.log(product); // or save to array, send to server, etc.
-  alert("Product saved: " + product.name);
+    console.log(product); // or save to array, send to server, etc.
+    alert("Product saved: " + product.name);
 });
 
 function increaseQty(btn) {
-  let input = btn.previousElementSibling;
-  let row = btn.closest('tr');
-  let priceObj= row.querySelector(".price-qty")
-  let unitPrice = parseFloat(row.querySelector(".unit-price").value);
+    let input = btn.previousElementSibling;
+    let row = btn.closest('tr');
+    let priceObj = row.querySelector(".price-qty")
+    let unitPrice = parseFloat(row.querySelector(".unit-price").value);
 
-  input.value = parseInt(input.value) + 1;
-  let totalPrice= unitPrice*input.value;
-  priceObj.textContent=totalPrice;
-  calculateTotal();
-  
+    input.value = parseInt(input.value) + 1;
+    let totalPrice = unitPrice * input.value;
+    priceObj.textContent = totalPrice;
+    calculateTotal();
+
 }
 
 function decreaseQty(btn) {
-  let input = btn.nextElementSibling;
-  if (parseInt(input.value) > 1) {
-    input.value = parseInt(input.value) - 1;
-  }
+    let input = btn.nextElementSibling;
+    if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+    }
 }
 
 function removeItem(btn) {
-  let row = btn.closest('tr');
+    let row = btn.closest('tr');
     console.log(row);
-  row.remove();
- 
+    row.remove();
+
 }
 
 function addToCart(productId) {
-  const product = products.find(p => p.id === productId);
-  if (!product) return;
-  const cartBody = document.getElementById("cart-body");
-  const row = document.createElement("tr");
-  row.innerHTML = `
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+    const cartBody = document.getElementById("cart-body");
+    const row = document.createElement("tr");
+    row.innerHTML = `
     <td>${product.item_code}</td>
     <td>${product.name}</td>
     <td>
@@ -699,34 +699,61 @@ function addToCart(productId) {
     <td>RS<span class="price-qty">${product.price}</span></td>
     <td><button onclick="removeItem(this)" class="remove-btn">×</button></td>
   `;
-    
+
     console.log(document.getElementById("cart-body").children);
-    
-  cartBody.appendChild(row);
+
+    cartBody.appendChild(row);
     calculateTotal();
 
 }
 
-function calculateTotal(){
+function calculateTotal() {
     let total = 0;
     const priceSpan = document.querySelectorAll('.price-qty');
     priceSpan.forEach(element => {
-      total += parseFloat(element.textContent);   
+        total += parseFloat(element.textContent);
     });
-    document.getElementById("grossTotal").innerText=total;
+    document.getElementById("grossTotal").innerText = total;
 }
 
-document.getElementById("discountInput").addEventListener("keydown", function(event) {
-  if (event.key === "Enter") {
-    let discountValue = parseFloat(this.value);
-    
-    
-    console.log("Entered discount:", discountValue);
-    // You can now use discountValue as needed
-    
-    document.getElementById("grossTotal").innerText = parseFloat(document.getElementById("grossTotal").innerText)-discountValue;
-    console.log(document.getElementById("grossTotal").innerText);
-    //document.getElementById("grossTotal").value-discountValue;
-  }
+document.getElementById("discountInput").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        let discountValue = parseFloat(this.value);
+
+
+        console.log("Entered discount:", discountValue);
+        document.getElementById("grossTotal").innerText = parseFloat(document.getElementById("grossTotal").innerText) - discountValue;
+
+    }
 
 });
+
+document.getElementById("pay-btn").addEventListener("click", () => {
+    //-----------total Balance set to place Order------------------------
+    let totalCost =parseFloat(document.getElementById("grossTotal").innerText);
+    document.getElementById("totalCost").value = totalCost >=0 ? totalCost.toFixed(2) : "0.00";
+    console.log(document.getElementById("totalCost").value);
+
+    document.getElementById("checkoutPopup").style.display = "flex";
+});
+
+document.getElementById("close-btn-ceckout-popup").addEventListener("click", () => {
+    document.getElementById("checkoutPopup").style.display = "none";
+});
+
+//-------------change balance
+document.getElementById("amountPaid").addEventListener("input", () => {
+    const total = parseFloat(document.getElementById("totalCost").value);
+    const paid = parseFloat(document.getElementById("amountPaid").value);
+    const change = paid - total;
+    document.getElementById("changeAmount").value = change >= 0 ? change.toFixed(2) : "0.00";
+});
+
+//-----------laod add customer form----------
+document.getElementById("add-customer").addEventListener("click",()=>{
+    document.getElementById("addCustomerPopup").style.display = "flex";
+})
+
+document.getElementById("close-btn-custAdd-popup").addEventListener("click",()=>{
+    document.getElementById("addCustomerPopup").style.display = "none";
+})
