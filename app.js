@@ -662,6 +662,7 @@ function increaseQty(btn) {
   input.value = parseInt(input.value) + 1;
   let totalPrice= unitPrice*input.value;
   priceObj.textContent=totalPrice;
+  calculateTotal();
   
 }
 
@@ -702,8 +703,7 @@ function addToCart(productId) {
     console.log(document.getElementById("cart-body").children);
     
   cartBody.appendChild(row);
-//   updateTotals();
-calculateTotal();
+    calculateTotal();
 
 }
 
@@ -716,3 +716,18 @@ function calculateTotal(){
     document.getElementById("grossTotal").innerText=total;
 }
 
+document.getElementById("discountInput").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    let discountValue = parseFloat(this.value);
+    
+    
+    console.log("Entered discount:", discountValue);
+    // You can now use discountValue as needed
+    
+    document.getElementById("grossTotal").innerText = parseFloat(document.getElementById("grossTotal").innerText)-discountValue;
+    console.log(document.getElementById("grossTotal").innerText);
+    //document.getElementById("grossTotal").value-discountValue;
+  }
+
+  
+});
