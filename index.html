@@ -172,6 +172,39 @@
             <button id="saveBtn">Save Product</button>
         </div>
     </div>
+    <div class="overlay" id="checkoutPopup">
+    <div class="popup2">
+      <span class="close-btn2" onclick="closePopup()">&times;</span>
+      <h2>Checkout</h2>
+
+      <label>Total Cost:</label>
+      <input type="text" id="totalCost" value="1000" readonly />
+
+      <label>Payment Method:</label>
+      <select id="paymentMethod">
+        <option value="cash">Cash</option>
+        <option value="card">Card</option>
+      </select>
+
+      <label>Amount Paid:</label>
+      <input type="number" id="amountPaid" placeholder="Enter amount paid" />
+
+      <label>Change:</label>
+      <input type="text" id="changeAmount" readonly />
+
+      <label>Customer Contact:</label>
+      <input type="text" id="customerContact" placeholder="Search contact..." />
+
+      <div class="actions">
+        <button onclick="searchCustomer()">Search Customer</button>
+        <button onclick="addCustomer()">Add Customer</button>
+      </div>
+
+      <div class="actions">
+        <button onclick="finalizePayment()">Complete Payment</button>
+      </div>
+    </div>
+  </div>
     <script src="app.js"></script>
 </body>
 </html>

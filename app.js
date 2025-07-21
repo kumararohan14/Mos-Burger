@@ -729,5 +729,4 @@ document.getElementById("discountInput").addEventListener("keydown", function(ev
     //document.getElementById("grossTotal").value-discountValue;
   }
 
-  
 });
