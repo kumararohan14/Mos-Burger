@@ -1,3 +1,4 @@
+// import Customer from "./Customer.js";
 console.log("first");
 let products = [
     {
@@ -580,6 +581,8 @@ let products = [
     // }
 ];
 
+let Customers = [];
+
 
 document.getElementById("search-box").addEventListener("input", function () {
 
@@ -699,9 +702,6 @@ function addToCart(productId) {
     <td>RS<span class="price-qty">${product.price}</span></td>
     <td><button onclick="removeItem(this)" class="remove-btn">×</button></td>
   `;
-
-    console.log(document.getElementById("cart-body").children);
-
     cartBody.appendChild(row);
     calculateTotal();
 
@@ -730,10 +730,11 @@ document.getElementById("discountInput").addEventListener("keydown", function (e
 
 document.getElementById("pay-btn").addEventListener("click", () => {
     //-----------total Balance set to place Order------------------------
-    let totalCost =parseFloat(document.getElementById("grossTotal").innerText);
-    document.getElementById("totalCost").value = totalCost >=0 ? totalCost.toFixed(2) : "0.00";
-    console.log(document.getElementById("totalCost").value);
+    let totalCost = parseFloat(document.getElementById("grossTotal").innerText);
+    document.getElementById("totalCost").value = totalCost >= 0 ? totalCost.toFixed(2) : "0.00";
 
+    const cartBody = document.getElementById("cart-body");
+    console.log(cartBody);
     document.getElementById("checkoutPopup").style.display = "flex";
 });
 
@@ -747,13 +748,227 @@ document.getElementById("amountPaid").addEventListener("input", () => {
     const paid = parseFloat(document.getElementById("amountPaid").value);
     const change = paid - total;
     document.getElementById("changeAmount").value = change >= 0 ? change.toFixed(2) : "0.00";
+
 });
 
+function billPrint() {
+    let invoiceHTML = `
+                   <div class="receipt">
+                    <header>
+                    <h1>STORE NAME</h1>
+                    <p>123 Market Street</p>
+                    <p>City, State ZIP</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Invoice #: 000123</p>
+                    <p>Date: 2025-07-24  14:35</p>
+                    </header>
+
+                    <table class="items">
+                    <thead>
+                        <tr>
+                        <th>Item</th>
+                        <th class="qty">Qty</th>
+                        <th class="price">Price</th>
+                        <th class="total">Total</th>
+                        </tr>
+                    </thead> 
+                    <tbody>
+    `;
+
+    let tbody = document.querySelectorAll("#cart-body tr");
+
+    tbody.forEach((row, index) => {
+        const cells = row.querySelectorAll("td");
+        let Qty = parseInt(cells[2].querySelector("input").value);
+        let price = parseInt(row.querySelector(".unit-price").value);
+        let priceQty = row.querySelector(".price-qty").textContent;
+
+        invoiceHTML += `<tr>
+                        <td>${cells[1].textContent}</td>
+                        <td class="qty">${Qty}</td>
+                        <td class="price">${price}</td>
+                        <td class="total">${priceQty}</td>
+                        </tr>`
+
+        console.log(cells[0].textContent);
+        console.log("unit-price " + row.querySelector(".unit-price").value);
+
+
+    });
+
+    invoiceHTML += `</tbody></table>`
+
+    const totalCost = document.getElementById("totalCost").value;
+    const paymentMethod = document.getElementById("paymentMethod").value;
+    const amountPaid = document.getElementById("amountPaid").value;
+    const changeAmount = document.getElementById("changeAmount").value;
+    const discount = document.getElementById("discountInput").value;
+
+    invoiceHTML += `<table class="totals" width="100%">
+                    <tbody>
+                        <tr>
+                        <td>Subtotal:</td>
+                        <td>RS${totalCost}</td>
+                        </tr>
+                        <tr>
+                        <td>Dis (5%):</td>
+                        <td>${discount}</td>
+                        </tr>
+                        <tr>
+                        <td>Total:</td>
+                        <td>${totalCost - discount}</td>
+                        </tr>
+                        <tr>
+                        <td>Cash:</td>
+                        <td>RS${amountPaid}</td>
+                        </tr>
+                        <tr>
+                        <td>Change:</td>
+                        <td>RS${changeAmount}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+
+                    <footer>
+                    <p>Thank you for shopping with us!</p>
+                    <p>Visit again.</p>
+                    </footer>
+                </div>`
+
+                if (!amountPaid) {
+                    console.log("amountpaid "+!amountPaid);
+                    alert("Amount Paid")
+                    return;
+                    
+                }
+    const tempDiv = document.createElement("div");
+    tempDiv.style.position = "absolute";
+    tempDiv.style.left = "-9999px";
+    tempDiv.innerHTML = invoiceHTML;
+    document.body.appendChild(tempDiv);
+
+
+
+
+    // Pass the real DOM element (not HTML string) to the PDF generator
+    downloadPDF(tempDiv).then(() => {
+        document.body.removeChild(tempDiv); // Clean up
+    });
+
+}
+
 //-----------laod add customer form----------
-document.getElementById("add-customer").addEventListener("click",()=>{
+document.getElementById("add-customer").addEventListener("click", () => {
     document.getElementById("addCustomerPopup").style.display = "flex";
 })
 
-document.getElementById("close-btn-custAdd-popup").addEventListener("click",()=>{
+document.getElementById("close-btn-custAdd-popup").addEventListener("click", () => {
     document.getElementById("addCustomerPopup").style.display = "none";
 })
+
+//-----------------Save Customer-------------------------
+function saveCustomer() {
+    const name = document.getElementById("customerName").value.trim();//trim use to delete whitepase
+    const phone = document.getElementById("customerPhone").value.trim();
+    const email = document.getElementById("customerEmail").value.trim();
+    const address = document.getElementById("customerAddress").value.trim();
+
+    // let customer = new Customer(name,email,phone,address)
+
+
+    const customer = {
+        fullName: name,
+        contactNumber: phone,
+        email: email,
+        address: address
+    };
+
+    if (customer !== null) {
+        if (name === "") {
+            alert("customer is required");
+            return;
+        }
+        if (phone === "") {
+            alert("phone is required")
+            return;
+        }
+        if (email === "") {
+            alert("email is required");
+            return;
+        }
+        if (address === "") {
+            alert("address is required");
+            return;
+        }
+        alert("customer is added successfully");
+        let push = Customers.push(customer);
+
+    } else {
+        alert("customer is added not successfully");
+    }
+
+
+
+
+
+    document.getElementById("customerName").value = null;
+    document.getElementById("customerPhone").value = null;
+    document.getElementById("customerEmail").value = null;
+    document.getElementById("customerAddress").value = null;
+}
+
+
+
+// async function downloadPDF(invoiceHTML) { //want to html content to convert to html2canvas
+//       const { jsPDF } = window.jspdf;
+//       // const content = document.getElementById('content');
+
+//       // Create canvas from HTML
+//       const canvas = await html2canvas(invoiceHTML, { scale: 2 });
+//       const imgData = canvas.toDataURL('image/png');
+
+//       // Set A6 page size
+//       const pdf = new jsPDF({ format: 'a6', unit: 'mm' });
+
+//       // Calculate image dimensions to fit A6
+//       const pageWidth = 105;
+//       const pageHeight = 160;
+//       const imgProps = {
+//         width: pageWidth - 20, // Leave 10mm margin on each side
+//         height: (canvas.height * (pageWidth - 20)) / canvas.width,
+//       };
+
+//       pdf.addImage(imgData, 'PNG', 10, 10, imgProps.width, imgProps.height);
+//       pdf.save('A6-download.pdf');
+//     };
+
+async function downloadPDF(element) {
+    const { jsPDF } = window.jspdf;
+
+    const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF({ format: "a6", unit: "mm" });
+
+    const pageWidth = 105;
+    const pageHeight = 148;
+
+    // Fit height into page if needed
+    let imgWidth = pageWidth - 20;
+    let imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    // If image is too tall, scale it down to fit page height
+    if (imgHeight > pageHeight - 20) {
+        imgHeight = pageHeight - 20;
+        imgWidth = pageWidth - 20;//(canvas.width * imgHeight) / canvas.height;
+    }
+
+    pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+    pdf.save("invoice.pdf");
+}
+
+

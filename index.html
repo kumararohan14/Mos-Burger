@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
         integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
@@ -205,7 +206,7 @@
             </div>
 
             <div class="actions">
-                <button onclick="finalizePayment()">Complete Payment</button>
+                <button onclick="billPrint()">Complete Payment</button>
             </div>
         </div>
     </div>
@@ -218,7 +219,7 @@
             <h2>Add New Customer</h2>
 
             <label>Full Name:</label>
-            <input type="text" id="customerName" placeholder="Enter full name" />
+            <input type="text" id="customerName" placeholder="Enter full name" required/>
 
             <label>Contact Number:</label>
             <input type="text" id="customerPhone" placeholder="Enter contact number" />
@@ -235,7 +236,10 @@
             </div>
         </div>
     </div>
-    <script src="app.js"></script>
+    <script src="app.js" ></script>
+
+    <div id="content"></div>
+
 </body>
 
 </html>
